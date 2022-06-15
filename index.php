@@ -10,22 +10,36 @@ require_once __DIR__ . '/Gioco.php';
 require_once __DIR__ . '/Collare.php';
 require_once __DIR__ . '/Cucce.php';
 require_once __DIR__ . '/User.php';
+require_once __DIR__ . '/CreditCard.php';
 
     
 
-    $crocchette_cane = new Cibo(20, 200, 'dog', 5, 'damp' );
+    $crocchette_cane = new Cibo('Forza10', 20, 200, 'dog', 5, 'damp' );
 
-    $collare_gatto = new Collare(19.99, 'cat', 2);
+    $collare_gatto = new Collare('cat gadegets', 19.99, 'cat', 2);
 
-    $cuccia_furetto = new Cucce(35, 'furetto', 3);
+    $cuccia_furetto = new Cucce('Animal House', 35, 'furetto', 3);
 
-    $gioco_criceto = new Gioco(15, 'criceto', 4);
+    $gioco_criceto = new Gioco('Little Pet Games', 15, 'criceto', 4);
 
-    $cliente = new User ();
+    $clientTest = new User();
+    $clientTest -> addToCart($crocchette_cane);
+    $clientTest -> addToCart($cuccia_furetto);
+    $clientTest -> userDataRegistered('nameTest', 'emailTest');
 
 
+    // echo '<pre>';
+    // var_dump($clientTest->cart);
+    // echo '</pre>';
 
-    echo '<pre>';
-    var_dump($gioco_criceto);
-    echo '</pre>';
-?>
+    ?>
+
+    <h2>Cart Shop</h2>
+
+    <ul>
+        <?php foreach ($clientTest ->cart as $bought_item) { ?>
+            <li> <?php echo $bought_item->printProduct(); ?></li>
+        <?php } ?>
+    </ul>
+
+    <h3> Total Price: <?php echo $clientTest -> totalPrice() ?> €  </h3>

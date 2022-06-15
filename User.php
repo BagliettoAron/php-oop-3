@@ -1,40 +1,50 @@
 <?php
 
-class Utente {
+require_once __DIR__ . '/index.php';
+
+class User {
     public $name;
     public $email = '';
     public $cart = [];
     private $discount;
     private $credit_car_expire_date;
 
-    function __construct($_name, $_email, $_cart, $_discount, $_credit_car_expire_date ) {
-        $this->name = $_name;
-        $this->email = $_email = '';
-        $this->cart = $_cart;
-        $this ->discount = $_discount;
-        $this -> credit_car_expire_date = $_credit_car_expire_date;
+    public function addToCart($product) {
+      
+            $this -> cart[] = $product;
+        
+        
     }
 
-    function addToCart($_product) {
-        $this -> cart[] = $_product;
-    }
-
-    function discount($_email) {
-
-        if ($_email) {
-            $this -> discount = 20;
-        } else {
-            $this -> discount =  0;
-        }
-    }
-
-    function totalPrice($_discount) {
+    public function totalPrice() {
         $total_price = 0;
-        foreach($this->cart as $item) {
-            $total_price += $item->prezzo;
+        foreach ($this->cart as $boughtProduct) {
+            $total_price += $boughtProduct->price;
         }
-        return ($total_price * 100) / $_discount;
+        if ($this->userRegistered()) {
+            $total_price = $total_price * 0.8;
+        }
+        return $total_price;
     }
+
+    public function userRegistered() {
+        if ($this -> email && $this->name) {
+            return true;   
+        } else {
+            return false;
+        }
+    }
+
+    public function userDataRegistered($_name, $_email) {
+        $this -> name = $_name;
+        $this->email = $_email;
+    }
+
+    public function paymentMethod ($_payment) {
+        $this-> payment = $_payment;
+    }
+
+    
 
 
 }
