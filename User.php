@@ -1,17 +1,23 @@
 <?php
 
 require_once __DIR__ . '/index.php';
+require_once __DIR__ . '/Adress.php';
 
 class User {
+    use Adress;
     public $name;
     public $email = '';
     public $cart = [];
     private $discount;
     private $credit_car_expire_date;
 
-    public function addToCart($product) {
-      
-            $this -> cart[] = $product;
+    public function addToCart($_product) {
+        if($_product->disponibile) {
+            $this -> cart[] = $_product;
+            return true;
+        } else {
+            throw new Exception ('prodotto non disponibile');
+        }
         
         
     }

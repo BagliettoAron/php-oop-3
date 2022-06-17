@@ -23,7 +23,12 @@ require_once __DIR__ . '/CreditCard.php';
     $gioco_criceto = new Gioco('Little Pet Games', 15, 'criceto', 4);
 
     $clientTest = new User();
-    $clientTest -> addToCart($crocchette_cane);
+
+    try {
+        $clientTest -> addToCart($crocchette_cane);
+    } catch (Exception $e) {
+        echo 'undefined error';
+    }
     $clientTest -> addToCart($cuccia_furetto);
     $clientTest -> userDataRegistered('nameTest', 'emailTest');
 
